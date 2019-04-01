@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlack"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="130pt"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:src="@drawable/img_logo_green_flag"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:width="260dp"
+        android:fontFamily="@font/advent_pro"
+        android:text="@string/description"
+        android:textSize="@dimen/ft_description"
+        android:textColor="@color/colorWhite"
+        android:layout_below="@id/logo"
+        android:layout_marginTop="50dp"/>
+
+    <ImageView
+        android:id="@+id/check_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/description"
+        android:src="@drawable/ic_check_lime_16dp"
+        android:layout_below="@id/description"
+        android:layout_marginTop="15dp"
+        android:layout_alignBottom="@id/opt_1"/>
+
+    <TextView
+        android:id="@+id/opt_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/description"
+        android:layout_marginStart="@dimen/opt_margin_start"
+        android:layout_marginTop="15dp"
+        android:layout_toEndOf="@id/check_1"
+        android:fontFamily="@font/advent_pro"
+        android:text="@string/opt_1"
+        android:textSize="@dimen/opt_text_size"
+        android:textColor="@color/colorWhite"/>
+
+    <ImageView
+        android:id="@+id/check_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/description"
+        android:src="@drawable/ic_check_lime_16dp"
+        android:layout_below="@id/check_1"
+        android:layout_alignBottom="@id/opt_2"/>
+
+    <TextView
+        android:id="@+id/opt_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/opt_1"
+        android:layout_marginStart="@dimen/opt_margin_start"
+        android:layout_toEndOf="@id/check_2"
+        android:fontFamily="@font/advent_pro"
+        android:text="@string/opt_2"
+        android:textSize="@dimen/opt_text_size"
+        android:textColor="@color/colorWhite" />
+
+    <ImageView
+        android:id="@+id/check_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/description"
+        android:src="@drawable/ic_check_lime_16dp"
+        android:layout_below="@id/check_2"
+        android:layout_alignBottom="@id/opt_3"/>
+
+    <TextView
+        android:id="@+id/opt_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/opt_2"
+        android:layout_marginStart="@dimen/opt_margin_start"
+        android:layout_toEndOf="@id/check_2"
+        android:textSize="@dimen/opt_text_size"
+        android:fontFamily="@font/advent_pro"
+        android:text="@string/opt_3"
+        android:textColor="@color/colorWhite"/>
+
+    <Button
+        android:id="@+id/btn_create_acct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
+        android:text="@string/create_an_account"
+        android:background="@color/colorLime"
+        android:textAllCaps="false"/>
+
+
+</RelativeLayout>
