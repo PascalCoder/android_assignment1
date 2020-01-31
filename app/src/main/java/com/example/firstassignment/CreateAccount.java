@@ -2,56 +2,64 @@ package com.example.firstassignment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.firstassignment.entities.FirstData;
 import com.example.firstassignment.utils.ValidationUtils;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class CreateAccount extends AppCompatActivity {
 
-    ImageView backArrow, checkEmail, checkPwd, checkPwdConfirm;
-    EditText emailAddress, password, passwordConfirm;
+    @BindView(R.id.iv_arrow_left)
+    ImageView backArrow;
+    @BindView(R.id.iv_check_email)
+    ImageView checkEmail;
+    @BindView(R.id.iv_check_pwd)
+    ImageView checkPwd;
+    @BindView(R.id.iv_check_pwd_conf)
+    ImageView checkPwdConfirm;
+
+    @BindView(R.id.et_email)
+    EditText emailAddress;
+    @BindView(R.id.et_pwd)
+    EditText password;
+    @BindView(R.id.et_pwd_confirm)
+    EditText passwordConfirm;
+
+    @BindView(R.id.tv_email_error)
+    TextView emailErrorMsg;
+    @BindView(R.id.tv_pwd_error)
+    TextView pwdErrorMsg;
+
+    @BindView(R.id.btn_next)
+    Button btnNextPage;
+
     String emailValue, passwordValue, passwordConfirmValue;
-    TextView emailErrorMsg, pwdErrorMsg;
+
     boolean pwdNoMatchRegex;
     boolean emailIsValid, pwdIsValid, pwdConfIsValid;
-
-    Button btnNextPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+        ButterKnife.bind(this);
 
-        emailErrorMsg = findViewById(R.id.tv_email_error);
-        checkEmail = findViewById(R.id.iv_check_email);
-        btnNextPage = findViewById(R.id.btn_next);
-
-        pwdErrorMsg = findViewById(R.id.tv_pwd_error);
-
-        checkPwd = findViewById(R.id.iv_check_pwd);
-        checkPwdConfirm = findViewById(R.id.iv_check_pwd_conf);
-
-        backArrow = findViewById(R.id.iv_arrow_left);
         backArrow.setOnClickListener(view -> backToHome());
 
-        emailAddress = findViewById(R.id.et_email);
         emailAddress.setOnFocusChangeListener((view, b) -> validateEmail());
 
-        password = findViewById(R.id.et_pwd);
-        passwordConfirm = findViewById(R.id.et_pwd_confirm);
         password.setOnFocusChangeListener((view, b) -> validatePassword());
         passwordConfirm.setOnFocusChangeListener((view, b) -> validatePasswordConfirm());
 
-        btnNextPage = findViewById(R.id.btn_next);
         if (validatePasswordConfirm() && validateEmail()) {
             btnNextPage.setEnabled(true);
             btnNextPage.setOnClickListener(view -> createAcctNextPage(new FirstData(emailValue, passwordValue)));
