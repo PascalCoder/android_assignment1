@@ -1,14 +1,16 @@
 package com.example.firstassignment;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.firstassignment.entities.FirstData;
+import com.example.firstassignment.utils.ValidationUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,12 +24,21 @@ public class CreateAccount extends AppCompatActivity {
     boolean pwdNoMatchRegex;
     boolean emailIsValid, pwdIsValid, pwdConfIsValid;
 
-    Button btnNextPage; // = (Button)findViewById(R.id.btn_next)
+    Button btnNextPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+
+        emailErrorMsg = findViewById(R.id.tv_email_error);
+        checkEmail = findViewById(R.id.iv_check_email);
+        btnNextPage = findViewById(R.id.btn_next);
+
+        pwdErrorMsg = findViewById(R.id.tv_pwd_error);
+
+        checkPwd = findViewById(R.id.iv_check_pwd);
+        checkPwdConfirm = findViewById(R.id.iv_check_pwd_conf);
 
         backArrow = findViewById(R.id.iv_arrow_left);
         backArrow.setOnClickListener(view -> backToHome());
@@ -41,38 +52,27 @@ public class CreateAccount extends AppCompatActivity {
         passwordConfirm.setOnFocusChangeListener((view, b) -> validatePasswordConfirm());
 
         btnNextPage = findViewById(R.id.btn_next);
-        if(validatePasswordConfirm() && validateEmail()){
+        if (validatePasswordConfirm() && validateEmail()) {
             btnNextPage.setEnabled(true);
-            btnNextPage.setOnClickListener(view -> createAcctNextPage());
-        }else{
+            btnNextPage.setOnClickListener(view -> createAcctNextPage(new FirstData(emailValue, passwordValue)));
+        } else {
             btnNextPage.setEnabled(false);
         }
-        btnNextPage.setOnClickListener(view -> createAcctNextPage());
-
-        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+        btnNextPage.setOnClickListener(view -> createAcctNextPage(new FirstData(emailValue, passwordValue)));
 
     }
 
     private boolean validateEmail() {
         emailValue = emailAddress.getText().toString().trim();
 
-        emailErrorMsg = findViewById(R.id.tv_email_error);
-        checkEmail = findViewById(R.id.iv_check_email);
-
-        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        Matcher myMatcher = pattern.matcher(emailValue);
-
-        btnNextPage = findViewById(R.id.btn_next);
-
-        if(emailValue.length() > 0) {
-            if (myMatcher.find()) {
+        if (emailValue.length() > 0) {
+            if (ValidationUtils.isEmailValid(emailValue)) {
                 emailAddress.setBackgroundResource(R.drawable.border_color_good);
 
                 checkEmail.setVisibility(View.VISIBLE);
 
                 emailIsValid = true;
-                if(pwdConfIsValid){ //validatePasswordConfirm()
+                if (pwdConfIsValid) { //validatePasswordConfirm()
                     btnNextPage.setEnabled(true);
                 }
 
@@ -97,7 +97,7 @@ public class CreateAccount extends AppCompatActivity {
                     return false;
                 }
             }
-        }else{
+        } else {
             checkEmail.setVisibility(View.GONE);
 
             emailIsValid = false;
@@ -111,23 +111,19 @@ public class CreateAccount extends AppCompatActivity {
     private boolean validatePassword() {
         passwordValue = password.getText().toString().trim();
 
-        String pwdRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
-        Pattern pattern = Pattern.compile(pwdRegex);
-        Matcher myMatcher = pattern.matcher(passwordValue);
-
-        btnNextPage = findViewById(R.id.btn_next);
-
-        if(passwordValue.length() < 8){
+        if (passwordValue.length() < 8) {
             pwdIsValid = false;
             btnNextPage.setEnabled(false);
             return false;
-        }else{
-            if(myMatcher.find()){
+        } else {
+            if (ValidationUtils.isPasswordValid(passwordValue)) {
                 pwdIsValid = true;
 
-                if(pwdConfIsValid && emailIsValid){btnNextPage.setEnabled(true);}
+                if (pwdConfIsValid && emailIsValid) {
+                    btnNextPage.setEnabled(true);
+                }
                 return true;
-            } else if(!passwordValue.equals(passwordConfirmValue)){
+            } else if (!passwordValue.equals(passwordConfirmValue)) {
                 password.setBackgroundResource(R.drawable.border_color_bad);
                 passwordConfirm.setBackgroundResource(R.drawable.border_color_bad);
 
@@ -136,18 +132,21 @@ public class CreateAccount extends AppCompatActivity {
 
                 return false;
 
-            }else if(passwordValue.equals(passwordConfirmValue) && myMatcher.find()){
+            } else if (passwordValue.equals(passwordConfirmValue)
+                    && ValidationUtils.isPasswordValid(passwordValue)) {
                 password.setBackgroundResource(R.drawable.border_color_good);
                 passwordConfirm.setBackgroundResource(R.drawable.border_color_good);
 
                 pwdIsValid = true;
                 pwdConfIsValid = true;
 
-                if(emailIsValid){btnNextPage.setEnabled(true);}
+                if (emailIsValid) {
+                    btnNextPage.setEnabled(true);
+                }
 
                 return true;
 
-            }else{
+            } else {
                 pwdNoMatchRegex = true;
                 pwdIsValid = false;
                 btnNextPage.setEnabled(false);
@@ -156,18 +155,12 @@ public class CreateAccount extends AppCompatActivity {
             }
         }
     }
-    private boolean validatePasswordConfirm(){
+
+    private boolean validatePasswordConfirm() {
         validatePassword();
         passwordConfirmValue = passwordConfirm.getText().toString().trim();
 
-        pwdErrorMsg = findViewById(R.id.tv_pwd_error);
-
-        checkPwd = findViewById(R.id.iv_check_pwd);
-        checkPwdConfirm = findViewById(R.id.iv_check_pwd_conf);
-
-        btnNextPage = findViewById(R.id.btn_next);
-
-        if(passwordConfirmValue.length() > 0) {
+        if (passwordConfirmValue.length() > 0) {
             if (passwordConfirmValue.equals(passwordValue) && validatePassword()) {
 
                 pwdErrorMsg.setVisibility(View.GONE);
@@ -184,7 +177,7 @@ public class CreateAccount extends AppCompatActivity {
 
                 pwdIsValid = pwdConfIsValid = true;
 
-                if(emailIsValid){
+                if (emailIsValid) {
                     btnNextPage.setEnabled(true);
                 }
 
@@ -223,7 +216,7 @@ public class CreateAccount extends AppCompatActivity {
 
                 return false;
             }
-        }else{
+        } else {
             checkPwd.setVisibility(View.GONE);
             checkPwdConfirm.setVisibility(View.GONE);
 
@@ -241,19 +234,20 @@ public class CreateAccount extends AppCompatActivity {
         finish();
     }
 
-    private void createAcctNextPage(){
+    private void createAcctNextPage(FirstData firstData) {
         btnNextPage = findViewById(R.id.btn_next);
 
-        if(!emailIsValid || !pwdIsValid || !pwdConfIsValid){
+        if (!emailIsValid || !pwdIsValid || !pwdConfIsValid) {
             btnNextPage.setEnabled(false);
         }
         //btnNextPage.setEnabled(true);
-        if(validateEmail() && validatePasswordConfirm()){
+        if (validateEmail() && validatePasswordConfirm()) {
             btnNextPage.setEnabled(true);
         }
 
         Intent intent = new Intent();
         intent.setClass(this, CreateAccountNextPage.class);
+        intent.putExtra("firstData", firstData);
 
         //btnNextPage.setEnabled(true);
 
