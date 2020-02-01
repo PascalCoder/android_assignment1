@@ -27,6 +27,9 @@
     <string name="postal_address_opt">Postal Address (Opt)</string>
     <string name="spinner_country_title">Choose a Country</string>
     <string name="back_to_home_page">Back to Home page</string>
+    <string name="log_in_text">Log in</string>
+    <string name="login_email_hint">Enter Email</string>
+    <string name="login_password_hint">Enter Password</string>
 
     <string-array name="countries">
         <item>Not-Specified</item>
