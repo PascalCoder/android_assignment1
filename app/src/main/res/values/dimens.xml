@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="opt_text_size">18dp</dimen>
+    <dimen name="opt_text_size">18sp</dimen>
     <dimen name="ft_description">24sp</dimen>
     <dimen name="opt_margin_start">8dp</dimen>
     <dimen name="et_width">320dp</dimen>
