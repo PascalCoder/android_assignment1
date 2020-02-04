@@ -1,4 +1,4 @@
-package com.example.firstassignment;
+package com.example.firstassignment.ui.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.firstassignment.R;
 import com.example.firstassignment.entities.FirstData;
 import com.example.firstassignment.utils.ValidationUtils;
 

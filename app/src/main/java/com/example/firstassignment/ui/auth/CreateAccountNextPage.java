@@ -1,4 +1,4 @@
-package com.example.firstassignment;
+package com.example.firstassignment.ui.auth;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.firstassignment.R;
 import com.example.firstassignment.utils.StringUtils;
 
 import java.util.Calendar;

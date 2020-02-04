@@ -1,4 +1,4 @@
-package com.example.firstassignment;
+package com.example.firstassignment.ui;
 
 import android.content.Intent;
 
@@ -6,6 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.Button;
+
+import com.example.firstassignment.R;
+import com.example.firstassignment.ui.auth.CreateAccount;
+import com.example.firstassignment.ui.auth.LoginActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
